@@ -13,7 +13,11 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor(element) {
-
+    if (element == null) {
+      throw "Пустой элемент";
+    }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**
@@ -21,7 +25,10 @@ class AsyncForm {
    * вызывает метод submit()
    * */
   registerEvents() {
-
+    this.element.addEventListener("load", (e) => {
+      e.preventDefault();
+      this.submit();
+    });
   }
 
   /**
@@ -32,18 +39,21 @@ class AsyncForm {
    * }
    * */
   getData() {
+    let formData = new formData(this.element);
 
+    $.each($("formData").serializeArray(), function (i, field) {
+      data[field.name] = field.value;
+    });
   }
 
-  onSubmit(options){
-
-  }
+  onSubmit(options) {}
 
   /**
    * Вызывает метод onSubmit и передаёт туда
    * данные, полученные из метода getData()
    * */
   submit() {
-
+    let options = this.getData();
+    this.onSubmit(options);
   }
 }
