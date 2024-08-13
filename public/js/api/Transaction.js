@@ -1,3 +1,3 @@
 class Transaction extends Entity {
-  url = "/transaction";
+  URL = "/transaction";
 }

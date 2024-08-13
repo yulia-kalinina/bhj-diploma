@@ -13,7 +13,7 @@ class UserWidget {
    * */
   constructor(element) {
     if (element == null) {
-      throw "Пустой элемент";
+      throw new Error("Пустой элемент");
     }
     this.element = element;
   }
@@ -28,7 +28,7 @@ class UserWidget {
   update() {
     let user = User.current();
     if (user !== undefined) {
-      let userName = document.querySelector(".user-name");
+      let userName = this.element.querySelector(".user-name");
       userName.textContent = user.name;
     }
   }

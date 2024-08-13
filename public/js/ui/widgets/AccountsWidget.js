@@ -15,7 +15,7 @@ class AccountsWidget {
    * */
   constructor(element) {
     if (element == null) {
-      throw "Пустой элемент";
+      throw new Error("Пустой элемент");
     }
     this.element = element;
     this.registerEvents();
@@ -30,21 +30,22 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
-    const createAccountBtn = document.querySelector(".create-account");
+    const createAccountBtn = this.element.querySelector(".create-account");
 
     createAccountBtn.addEventListener("click", (e) => {
       e.preventDefault();
       App.getModal("createAccount").open();
     });
 
-    let allAccounts = [...document.querySelectorAll(".account")];
-
-    allAccounts.forEach((elem) => {
-      elem.addEventListener("click", (e) => {
-        e.preventDefault();
-        AccountsWidget.onSelectAccount();
-        return false;
-      });
+    this.element.addEventListener("click", (event) => {
+      let target = event.target.closest("li");
+      if (!target) {
+        return;
+      }
+      if (!this.element.contains(target)) {
+        return;
+      }
+      this.onSelectAccount(target);
     });
   }
 
@@ -61,10 +62,11 @@ class AccountsWidget {
   update() {
     let user = User.current();
     if (user !== undefined) {
-      Account.list(data, (err, response) => {
-        if (response.success === true) {
-          AccountsWidget.clear();
-          this.renderItem(data);
+      Account.list(user.data, (err, response) => {
+        if (response && response.success === true) {
+          let arrOfLists = response.data;
+          this.clear();
+          this.renderItem(arrOfLists);
         }
       });
     }
@@ -76,7 +78,7 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-    let allAccounts = [...document.querySelectorAll(".account")];
+    let allAccounts = this.element.querySelectorAll(".account");
     allAccounts.forEach((elem) => {
       elem.remove();
     });
@@ -90,7 +92,7 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount(element) {
-    let allAccounts = [...document.querySelectorAll(".account")];
+    let allAccounts = this.element.querySelectorAll(".account");
 
     function clearActive() {
       allAccounts.forEach((elem) => {
@@ -98,15 +100,9 @@ class AccountsWidget {
       });
     }
 
-    allAccounts.forEach((elem) => {
-      elem.addEventListener("click", (e) => {
-        e.preventDefault();
-        clearActive();
-        elem.classList.add("active");
-        App.showPage("transactions", { account_id: elem.id });
-        return false;
-      });
-    });
+    clearActive();
+    element.classList.add("active");
+    App.showPage("transactions", { account_id: element.id });
   }
 
   /**
@@ -124,6 +120,7 @@ class AccountsWidget {
       "</span> / <span>" +
       item.sum +
       "₽</span></a>";
+    return li;
   }
 
   /**
@@ -133,6 +130,9 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data) {
-    this.element.appendChild(AccountsWidget.getAccountHTML(data));
+    data.forEach((elem) => {
+      let newList = this.getAccountHTML(elem);
+      this.element.appendChild(newList);
+    });
   }
 }

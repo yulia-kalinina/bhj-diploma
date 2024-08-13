@@ -2,31 +2,30 @@ const createRequest = (options = {}) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = "json";
 
-  let url = options.url;
-  let method = options.method;
+  let { url, method, data } = options;
   let formData = new FormData();
 
   if (options.data) {
-    let data = Object.entries(options.data);
+    data = Object.entries(options.data);
 
     if (method === "GET") {
-      for ([key, value] of data) {
+      for (let [key, value] of data) {
         url += key + "=" + value + "&";
       }
     }
 
     if (method !== "GET") {
-      for ([key, value] of data) {
+      for (let [key, value] of data) {
         formData.append(key, value);
       }
     }
   }
 
-  try {
-    xhr.addEventListener("load", () => {
-      options.callback(null, xhr.response);
-    });
+  xhr.addEventListener("load", () => {
+    options.callback(null, xhr.response);
+  });
 
+  try {
     xhr.open(method, url);
     xhr.send(formData);
   } catch (err) {

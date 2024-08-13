@@ -10,15 +10,19 @@ class TransactionsPage {
    * Сохраняет переданный элемент и регистрирует события
    * через registerEvents()
    * */
-  constructor( element ) {
-
+  constructor(element) {
+    if (element == null) {
+      throw new Error("Пустой элемент");
+    }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-
+    this.render(options);
   }
 
   /**
@@ -28,7 +32,18 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
+    const removeAccountBtn = this.element.querySelector(".remove-account");
 
+    removeAccountBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.removeAccount();
+    });
+
+    const removeTransactionBtn = this.element.querySelector(
+      ".transaction__remove"
+    );
+
+   
   }
 
   /**
@@ -40,9 +55,7 @@ class TransactionsPage {
    * либо обновляйте только виджет со счетами и формы создания дохода и расхода
    * для обновления приложения
    * */
-  removeAccount() {
-
-  }
+  removeAccount() {}
 
   /**
    * Удаляет транзакцию (доход или расход). Требует
@@ -50,9 +63,7 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update(),
    * либо обновляйте текущую страницу (метод update) и виджет со счетами
    * */
-  removeTransaction( id ) {
-
-  }
+  removeTransaction(id) {}
 
   /**
    * С помощью Account.get() получает название счёта и отображает
@@ -60,47 +71,35 @@ class TransactionsPage {
    * Получает список Transaction.list и полученные данные передаёт
    * в TransactionsPage.renderTransactions()
    * */
-  render(options){
-
-  }
+  render(options) {}
 
   /**
    * Очищает страницу. Вызывает
    * TransactionsPage.renderTransactions() с пустым массивом.
    * Устанавливает заголовок: «Название счёта»
    * */
-  clear() {
-
-  }
+  clear() {}
 
   /**
    * Устанавливает заголовок в элемент .content-title
    * */
-  renderTitle(name){
-
-  }
+  renderTitle(name) {}
 
   /**
    * Форматирует дату в формате 2019-03-10 03:20:41 (строка)
    * в формат «10 марта 2019 г. в 03:20»
    * */
-  formatDate(date){
-
-  }
+  formatDate(date) {}
 
   /**
    * Формирует HTML-код транзакции (дохода или расхода).
    * item - объект с информацией о транзакции
    * */
-  getTransactionHTML(item){
-
-  }
+  getTransactionHTML(item) {}
 
   /**
    * Отрисовывает список транзакций на странице
    * используя getTransactionHTML
    * */
-  renderTransactions(data){
-
-  }
+  renderTransactions(data) {}
 }

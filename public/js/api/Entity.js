@@ -1,36 +1,30 @@
 class Entity {
-  url = "";
+  URL = "";
 
   static list(data, callback) {
     createRequest({
-      url: this.url,
+      url: "/account",
       method: "GET",
       data,
-      callback: (err, response) => {
-        callback(err, response);
-      },
+      callback,
     });
   }
 
   static create(data, callback) {
     createRequest({
-      url: this.url,
+      url: "/account",
       method: "PUT",
       data,
-      callback: (err, response) => {
-        callback(err, response);
-      },
+      callback,
     });
   }
 
   static remove(data, callback) {
     createRequest({
-      url: this.url,
+      url: this.URL,
       method: "DELETE",
       data,
-      callback: (err, response) => {
-        callback(err, response);
-      },
+      callback,
     });
   }
 }

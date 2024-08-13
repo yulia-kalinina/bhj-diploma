@@ -14,7 +14,7 @@ class AsyncForm {
    * */
   constructor(element) {
     if (element == null) {
-      throw "Пустой элемент";
+      throw new Error("Пустой элемент");
     }
     this.element = element;
     this.registerEvents();
@@ -25,7 +25,7 @@ class AsyncForm {
    * вызывает метод submit()
    * */
   registerEvents() {
-    this.element.addEventListener("load", (e) => {
+    this.element.addEventListener("submit", (e) => {
       e.preventDefault();
       this.submit();
     });
@@ -39,11 +39,9 @@ class AsyncForm {
    * }
    * */
   getData() {
-    let formData = new formData(this.element);
-
-    $.each($("formData").serializeArray(), function (i, field) {
-      data[field.name] = field.value;
-    });
+    let formData = new FormData(this.element);
+    let entries = formData.entries();
+    return Object.fromEntries(entries);
   }
 
   onSubmit(options) {}
@@ -53,7 +51,7 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-    let options = this.getData();
-    this.onSubmit(options);
+    let data = this.getData();
+    this.onSubmit(data);
   }
 }

@@ -5,6 +5,18 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1"
+    },
+    {
+      "name": "Иван",
+      "email": "ivan@demo.ru",
+      "password": "rhery354",
+      "id": "5bk93ls8lzpydvx4"
+    },
+    {
+      "name": "demo",
+      "email": "demo@demo.ru",
+      "password": "demo",
+      "id": "5bk93niblzqos0m8"
     }
   ],
   "accounts": [
@@ -22,6 +34,35 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
+    },
+    {
+      "name": "Sberbank",
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk93t9clzrc5xk9"
+    },
+    {
+      "name": "Test",
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk93te5lzrcaloz"
+    },
+    {
+      "name": "Tinkoff",
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk93vwslzs21t90"
+    },
+    {
+      "name": "VTB",
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk93w2blzs26isa"
+    },
+    {
+      "name": "Alfabank",
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk93w74lzs29e8g"
+    },
+    {
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk9313wrlzs63zgb"
     }
   ],
   "transactions": [

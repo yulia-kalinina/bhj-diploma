@@ -13,7 +13,7 @@ class Modal {
    * */
   constructor(element) {
     if (element == null) {
-      throw "Пустой элемент";
+      throw new Error("Пустой элемент");
     }
     this.element = element;
     this.registerEvents();
@@ -25,9 +25,7 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    let closeButton = [
-      ...this.element.querySelectorAll('[data-dismiss="modal"]'),
-    ];
+    let closeButton = this.element.querySelectorAll('[data-dismiss="modal"]');
 
     closeButton.forEach((elem) => {
       elem.addEventListener("click", (e) => {
@@ -41,7 +39,7 @@ class Modal {
    * Срабатывает после нажатия на элементы, закрывающие окно.
    * Закрывает текущее окно (Modal.close())
    * */
-  onClose(e) {
+  onClose() {
     this.close();
   }
 
