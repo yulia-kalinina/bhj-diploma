@@ -38,6 +38,7 @@ class AccountsWidget {
     });
 
     this.element.addEventListener("click", (event) => {
+      event.preventDefault();
       let target = event.target.closest("li");
       if (!target) {
         return;
@@ -61,7 +62,7 @@ class AccountsWidget {
    * */
   update() {
     let user = User.current();
-    if (user !== undefined) {
+    if (user) {
       Account.list(user.data, (err, response) => {
         if (response && response.success === true) {
           let arrOfLists = response.data;
@@ -102,7 +103,7 @@ class AccountsWidget {
 
     clearActive();
     element.classList.add("active");
-    App.showPage("transactions", { account_id: element.id });
+    App.showPage("transactions", { account_id: element.dataset.id });
   }
 
   /**
@@ -111,16 +112,15 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item) {
-    let li = document.createElement("li");
-    li.className = "active account";
-    li.dataset.id = item.id;
-    li.innerHTML =
-      '<a href="#"><span>' +
+    return (
+      '<li class="account" data-id=' +
+      item.id +
+      '><a href="#"><span>' +
       item.name +
       "</span> / <span>" +
       item.sum +
-      "₽</span></a>";
-    return li;
+      "₽</span></a></li>"
+    );
   }
 
   /**
@@ -130,9 +130,11 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data) {
+    const accountsPanel = document.querySelector(".accounts-panel");
+
     data.forEach((elem) => {
-      let newList = this.getAccountHTML(elem);
-      this.element.appendChild(newList);
+      let newCode = this.getAccountHTML(elem);
+      accountsPanel.insertAdjacentHTML("beforeend", newCode);
     });
   }
 }

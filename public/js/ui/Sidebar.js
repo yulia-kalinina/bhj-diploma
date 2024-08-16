@@ -23,15 +23,8 @@ class Sidebar {
 
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      if (
-        body.classList.contains("sidebar-open") &&
-        body.classList.contains("sidebar-collapse")
-      ) {
-        body.classList.remove("sidebar-open", "sidebar-collapse");
-      } else {
-        body.classList.add("sidebar-open", "sidebar-collapse");
-      }
-      return false;
+      body.classList.toggle("sidebar-open");
+      body.classList.toggle("sidebar-collapse");
     });
   }
 

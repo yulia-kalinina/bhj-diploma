@@ -40,8 +40,7 @@ class AsyncForm {
    * */
   getData() {
     let formData = new FormData(this.element);
-    let entries = formData.entries();
-    return Object.fromEntries(entries);
+    return Object.fromEntries(formData.entries());
   }
 
   onSubmit(options) {}
@@ -51,7 +50,6 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-    let data = this.getData();
-    this.onSubmit(data);
+    this.onSubmit(this.getData());
   }
 }
