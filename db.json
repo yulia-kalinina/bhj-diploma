@@ -17,6 +17,12 @@
       "email": "demo@demo.ru",
       "password": "demo",
       "id": "5bk93niblzqos0m8"
+    },
+    {
+      "name": "Юлия",
+      "email": "yulia@demo.com",
+      "password": "qwerty18",
+      "id": "5bk937mwm00ocy7m"
     }
   ],
   "accounts": [
@@ -68,6 +74,21 @@
       "name": "ВБРР",
       "user_id": "5bk93niblzqos0m8",
       "id": "5bk931aqrlzv1l367"
+    },
+    {
+      "name": "Test2",
+      "user_id": "5bk93niblzqos0m8",
+      "id": "5bk931ztflzz75qi2"
+    },
+    {
+      "name": "Sberbank",
+      "user_id": "5bk937mwm00ocy7m",
+      "id": "5bk937ohm00od681"
+    },
+    {
+      "name": "Test",
+      "user_id": "5bk937mwm00ocy7m",
+      "id": "5bk938vum00psj3q"
     }
   ],
   "transactions": [
@@ -268,6 +289,78 @@
       "account_id": "5bk93t9clzrc5xk9",
       "user_id": "5bk93niblzqos0m8",
       "created_at": "2024-08-16T06:54:44.566Z"
+    },
+    {
+      "id": "5bk9321e1lzz7ob9h",
+      "type": "income",
+      "name": "Gift",
+      "sum": 20000,
+      "account_id": "5bk93te5lzrcaloz",
+      "user_id": "5bk93niblzqos0m8",
+      "created_at": "2024-08-18T06:53:55.588Z"
+    },
+    {
+      "id": "5bk93v3lzzt8byj",
+      "type": "income",
+      "name": "Test3",
+      "sum": 3000,
+      "account_id": "5bk93te5lzrcaloz",
+      "user_id": "5bk93niblzqos0m8",
+      "created_at": "2024-08-18T16:57:21.546Z"
+    },
+    {
+      "id": "5bk932lblzzv6h0v",
+      "type": "income",
+      "name": "Test",
+      "sum": 3200,
+      "account_id": "5bk93w74lzs29e8g",
+      "user_id": "5bk93niblzqos0m8",
+      "created_at": "2024-08-18T17:51:54.030Z"
+    },
+    {
+      "id": "5bk93351lzzvud3r",
+      "type": "expense",
+      "name": "Test",
+      "sum": 200,
+      "account_id": "5bk93vwslzs21t90",
+      "user_id": "5bk93niblzqos0m8",
+      "created_at": "2024-08-18T18:10:28.694Z"
+    },
+    {
+      "id": "5bk9351mm00mz3aw",
+      "type": "expense",
+      "name": "Test",
+      "sum": 2000,
+      "account_id": "5bk93te5lzrcaloz",
+      "user_id": "5bk93niblzqos0m8",
+      "created_at": "2024-08-19T06:49:58.903Z"
+    },
+    {
+      "id": "5bk937p7m00odium",
+      "type": "income",
+      "name": "Зарплата",
+      "sum": 5000,
+      "account_id": "5bk937ohm00od681",
+      "user_id": "5bk937mwm00ocy7m",
+      "created_at": "2024-08-19T07:29:11.853Z"
+    },
+    {
+      "id": "5bk937pxm00odwwx",
+      "type": "expense",
+      "name": "Подарок",
+      "sum": 200,
+      "account_id": "5bk937ohm00od681",
+      "user_id": "5bk937mwm00ocy7m",
+      "created_at": "2024-08-19T07:29:30.080Z"
+    },
+    {
+      "id": "5bk938wpm00pss83",
+      "type": "income",
+      "name": "Test",
+      "sum": 3000,
+      "account_id": "5bk938vum00psj3q",
+      "user_id": "5bk937mwm00ocy7m",
+      "created_at": "2024-08-19T08:09:03.458Z"
     }
   ]
 }

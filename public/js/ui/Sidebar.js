@@ -49,7 +49,7 @@ class Sidebar {
     const logOutButton = document.querySelector(".menu-item_logout");
     logOutButton.addEventListener("click", () => {
       User.logout((err, response) => {
-        if (response && response.success === true) {
+        if (response && response.success) {
           App.setState("init");
         }
       });

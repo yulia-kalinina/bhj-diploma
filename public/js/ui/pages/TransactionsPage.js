@@ -48,7 +48,7 @@ class TransactionsPage {
       if (!target) {
         return;
       }
-      if (!this.element.contains(target)) {
+      if (!contentSection.contains(target)) {
         return;
       }
       this.removeTransaction(target.dataset.id);
@@ -74,7 +74,6 @@ class TransactionsPage {
     if (areYouSure) {
       Account.remove(this.lastOptions, (err, response) => {
         if (response && response.success) {
-          console.log(response);
           App.updateWidgets();
           App.updateForms();
         }
@@ -93,8 +92,8 @@ class TransactionsPage {
     let areYouSure = confirm("Вы действительно хотите удалить эту транзакцию?");
 
     if (areYouSure) {
-      Transaction.remove(data, (err, response) => {
-        if (response && response.success === true) {
+      Transaction.remove(this.lastOptions, (err, response) => {
+        if (response && response.success) {
           App.update();
         }
       });
@@ -120,8 +119,8 @@ class TransactionsPage {
     });
 
     Transaction.list(this.lastOptions, (err, response) => {
-      if (response && response.success === true) {
-        console.log(response.data);
+      if (response && response.success) {
+        this.renderTransactions(response.data);
       }
     });
   }
@@ -132,7 +131,8 @@ class TransactionsPage {
    * Устанавливает заголовок: «Название счёта»
    * */
   clear() {
-    this.renderTransactions([]);
+    let newItem = [];
+    this.renderTransactions(newItem);
     this.renderTitle("«Название счёта»");
     this.lastOptions = "";
   }
@@ -150,12 +150,14 @@ class TransactionsPage {
    * в формат «10 марта 2019 г. в 03:20»
    * */
   formatDate(date) {
-    let today = new Date().toLocaleString("ru", {
+    let formatedDate = new Date(date).toLocaleString("ru", {
       day: "numeric",
       month: "long",
       year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
     });
-    return today + "в" + today.getHours() + ":" + today.getMinutes();
+    return formatedDate;
   }
 
   /**
@@ -163,19 +165,32 @@ class TransactionsPage {
    * item - объект с информацией о транзакции
    * */
   getTransactionHTML(item) {
-    return (
-      '<div class="transaction transaction_' +
-      item.type +
-      'row"><div class="col-md-7 transaction__details"><div class="transaction__icon"><span class="fa fa-money fa-2x"></span></div><div class="transaction__info"><h4 class="transaction__title">' +
-      item.name +
-      '</h4><div class="transaction__date">' +
-      this.formatDate(date) +
-      '</div></div></div><div class="col-md-3"><div class="transaction__summ">' +
-      item.sum +
-      '<span class="currency">₽</span></div></div><div class="col-md-2 transaction__controls"><button class="btn btn-danger transaction__remove" data-id=' +
-      item["account_id"] +
-      '><i class="fa fa-trash"></i></button></div></div>'
-    );
+    console.log(item);
+    return `<div class="transaction transaction_${item.type} row">
+    <div class="col-md-7 transaction__details">
+      <div class="transaction__icon">
+          <span class="fa fa-money fa-2x"></span>
+      </div>
+      <div class="transaction__info">
+          <h4 class="transaction__title">${item.name}</h4>
+          <div class="transaction__date">${this.formatDate(
+            item["created_at"]
+          )}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="transaction__summ">
+          ${item.sum} <span class="currency">₽</span>
+      </div>
+    </div>
+    <div class="col-md-2 transaction__controls">
+        <button class="btn btn-danger transaction__remove" data-id=${
+          item["account_id"]
+        }>
+            <i class="fa fa-trash"></i>  
+        </button>
+    </div>
+</div>`;
   }
 
   /**
@@ -185,9 +200,10 @@ class TransactionsPage {
   renderTransactions(data) {
     const contentTransactions = document.querySelector(".content");
 
-    data.forEach((elem) => {
-      let newTransactionCode = this.getTransactionHTML(elem);
-      contentTransaction.insertAdjacentHTML("beforeend", newTransactionCode);
-    });
+    contentTransactions.innerHTML = data.reduce(
+      (accumulator, currentElem) =>
+        accumulator + " " + this.getTransactionHTML(currentElem),
+      ""
+    );
   }
 }

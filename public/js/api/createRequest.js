@@ -10,7 +10,7 @@ const createRequest = (options = {}) => {
 
     if (method === "GET") {
       for (let [key, value] of data) {
-        url += key + "=" + value + "&";
+        url = url + "?" + key + "=" + value;
       }
     }
 

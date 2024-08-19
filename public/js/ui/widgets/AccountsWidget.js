@@ -37,13 +37,15 @@ class AccountsWidget {
       App.getModal("createAccount").open();
     });
 
-    this.element.addEventListener("click", (event) => {
+    const accountsPanel = document.querySelector(".accounts-panel");
+
+    accountsPanel.addEventListener("click", (event) => {
       event.preventDefault();
       let target = event.target.closest("li");
       if (!target) {
         return;
       }
-      if (!this.element.contains(target)) {
+      if (!accountsPanel.contains(target)) {
         return;
       }
       this.onSelectAccount(target);
@@ -112,15 +114,7 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item) {
-    return (
-      '<li class="account" data-id=' +
-      item.id +
-      '><a href="#"><span>' +
-      item.name +
-      "</span> / <span>" +
-      item.sum +
-      "₽</span></a></li>"
-    );
+    return `<li class="account" data-id=${item.id}><a href="#"><span>${item.name}</span> / <span>${item.sum} ₽</span></a></li>`;
   }
 
   /**
