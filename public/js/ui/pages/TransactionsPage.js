@@ -51,6 +51,7 @@ class TransactionsPage {
       if (!contentSection.contains(target)) {
         return;
       }
+      console.log(target.dataset.id);
       this.removeTransaction(target.dataset.id);
     });
   }
@@ -72,10 +73,14 @@ class TransactionsPage {
     let areYouSure = confirm("Вы действительно хотите удалить счёт?");
 
     if (areYouSure) {
-      Account.remove(this.lastOptions, (err, response) => {
+      Account.get(this.lastOptions["account_id"], (err, response) => {
         if (response && response.success) {
-          App.updateWidgets();
-          App.updateForms();
+          Account.remove(response.data, (err, response) => {
+            if (response && response.success) {
+              App.updateWidgets();
+              App.updateForms();
+            }
+          });
         }
       });
       this.clear();
@@ -92,9 +97,19 @@ class TransactionsPage {
     let areYouSure = confirm("Вы действительно хотите удалить эту транзакцию?");
 
     if (areYouSure) {
-      Transaction.remove(this.lastOptions, (err, response) => {
+      Transaction.list(this.lastOptions, (err, response) => {
         if (response && response.success) {
-          App.update();
+          let data = response.data;
+
+          data.forEach((obj) => {
+            if (id === obj.id) {
+              Transaction.remove(obj, (err, response) => {
+                if (response && response.success) {
+                  App.update();
+                }
+              });
+            }
+          });
         }
       });
     }
@@ -184,9 +199,7 @@ class TransactionsPage {
       </div>
     </div>
     <div class="col-md-2 transaction__controls">
-        <button class="btn btn-danger transaction__remove" data-id=${
-          item["account_id"]
-        }>
+        <button class="btn btn-danger transaction__remove" data-id=${item.id}>
             <i class="fa fa-trash"></i>  
         </button>
     </div>
