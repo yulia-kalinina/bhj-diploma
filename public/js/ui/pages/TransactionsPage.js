@@ -73,16 +73,15 @@ class TransactionsPage {
     let areYouSure = confirm("Вы действительно хотите удалить счёт?");
 
     if (areYouSure) {
-      Account.get(this.lastOptions["account_id"], (err, response) => {
-        if (response && response.success) {
-          Account.remove(response.data, (err, response) => {
-            if (response && response.success) {
-              App.updateWidgets();
-              App.updateForms();
-            }
-          });
+      Account.remove(
+        { id: this.lastOptions["account_id"] },
+        (err, response) => {
+          if (response && response.success) {
+            App.updateWidgets();
+            App.updateForms();
+          }
         }
-      });
+      );
       this.clear();
     }
   }
@@ -97,19 +96,9 @@ class TransactionsPage {
     let areYouSure = confirm("Вы действительно хотите удалить эту транзакцию?");
 
     if (areYouSure) {
-      Transaction.list(this.lastOptions, (err, response) => {
+      Transaction.remove({ id: id }, (err, response) => {
         if (response && response.success) {
-          let data = response.data;
-
-          data.forEach((obj) => {
-            if (id === obj.id) {
-              Transaction.remove(obj, (err, response) => {
-                if (response && response.success) {
-                  App.update();
-                }
-              });
-            }
-          });
+          App.update();
         }
       });
     }
